@@ -15,7 +15,7 @@ services:
 #_____________________________________
   crud_postgres:
     container_name: crud_postgres
-    build: ./cqrs_database_read/
+    build: ./crud_database_read/
     ports:
       - "5431:5432"
     environment:

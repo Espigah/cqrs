@@ -11,3 +11,7 @@ Aqui vamos ter um pouco de Angular, Nginx, Docker, Postgres, Mongo, Quarkus, Sma
 # Iterações
 
 Você pode alterar `MAX_ITERATIONS` em `client/src/app/tester/tester.component.ts` 
+
+# Sobre
+
+(https://fabriciodezain.wordpress.com/2020/07/21/cqrscommand-query-responsibility-segregatio-vs-crud-application/)[https://fabriciodezain.wordpress.com/2020/07/21/cqrscommand-query-responsibility-segregatio-vs-crud-application/]
