@@ -1,0 +1,27 @@
+version: "3"
+services:
+  client:
+    build:
+      context: .
+    ports:
+      - "4200:80"
+    depends_on: 
+      - crud_aplication
+
+  postgres:
+    build: ../cqrs_database_read/
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: db
+  
+  crud_aplication:
+    image: quarkus/amqp-quickstart-jvm
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - postgres
+    environment:
+      QUARKUS_DATASOURCE_PASSWORD: admin

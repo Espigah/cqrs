@@ -1,0 +1,23 @@
+# A docker compose file to start an Artemis AMQP broker
+# more details on https://github.com/vromero/activemq-artemis-docker.
+version: '3'
+
+services:
+  crud_aplication:
+    image: fabriciogoncalves/quarkus_crud
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - postgres
+    environment:
+      QUARKUS_DATASOURCE_PASSWORD: admin
+
+  postgres:
+    build: ../cqrs_database_read/
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: db
+  

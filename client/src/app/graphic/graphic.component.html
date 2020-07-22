@@ -1,0 +1,22 @@
+<div class="container">
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">{{title}}</a>
+  </nav>
+  <div class="row">
+    <div class="col">
+      <div class="chart-wrapper">
+        <canvas
+          baseChart
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+</div>

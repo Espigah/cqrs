@@ -1,0 +1,77 @@
+version: "3"
+services:
+
+  client:
+    container_name: client
+    build:
+      context: ./client/
+    ports:
+      - "4200:80"
+    depends_on: 
+      - crud_aplication
+      - cqrs_aplication
+#_____________________________________
+# CRUD
+#_____________________________________
+  crud_postgres:
+    container_name: crud_postgres
+    build: ./cqrs_database_read/
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: db
+  
+  crud_aplication:
+    container_name: crud_aplication
+    image: fabriciogoncalves/quarkus_crud
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - crud_postgres
+    environment:
+      QUARKUS_DATASOURCE_PASSWORD: admin
+      
+
+#_______________________________________________
+# Command Query Responsibility Segregation
+#_______________________________________________
+  cqrs_postgres:
+    container_name: cqrs_postgres
+    build: ./cqrs_database_write/
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: db
+  
+  cqrs_aplication:
+    container_name: cqrs_aplication
+    image: fabriciogoncalves/quarkus_cqrs
+    ports:
+      - "8081:8080"
+    depends_on: 
+      - cqrs_postgres
+      - mongo
+      - artemis
+    environment:
+      QUARKUS_DATASOURCE_PASSWORD: admin
+
+  mongo:
+    container_name: cqrs_mongo
+    image: mongo:latest
+    ports:
+      - 27017:27017
+
+  artemis:
+    container_name: cqrs_artemis
+    image: vromero/activemq-artemis:2.8.0-alpine
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "5672:5672"
+    environment:
+      ARTEMIS_USERNAME: quarkus
+      ARTEMIS_PASSWORD: quarkus
