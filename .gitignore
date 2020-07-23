@@ -2,6 +2,6 @@ node_modules
 .history
 dist
 .mvn
-cqrs_aplication/
+cqrs_aplication/data
 .idea
 .vscode

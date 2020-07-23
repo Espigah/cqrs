@@ -1,0 +1,32 @@
+# A docker compose file to start an Artemis AMQP broker
+# more details on https://github.com/vromero/activemq-artemis-docker.
+version: '2'
+
+services:
+
+  artemis:
+    image: vromero/activemq-artemis:2.8.0-alpine
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "5672:5672"
+    environment:
+      ARTEMIS_USERNAME: quarkus
+      ARTEMIS_PASSWORD: quarkus
+
+  postgres:
+    build: ../cqrs_database_write/
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: db
+  
+  mongo:
+    image: mongo:latest
+    container_name: "mongo"
+    ports:
+      - 27017:27017
+    ##command: mongod --auth
+    #command: mongod --smallfiles --logpath=/dev/null # --quiet
